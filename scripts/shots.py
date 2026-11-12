@@ -150,7 +150,7 @@ const { chromium } = require(%s);
   await p.click('.verify-bar button.recheck');
   await p.waitForFunction(() => /checks passed|could not run/.test(document.querySelector('.verify-summary').textContent), null, { timeout: 240000 });
   const shots = [['05-what-this-season-proves-checked-in-the-browser', '#what-this-season-proves'],
-                 ['06-architecture', '#who-does-what-and-what-each-part-can-prove'],
+                 ['06-architecture', 'section:has(.arch)'],
                  ['07-a-duel-and-an-opened-task', '#duels'], ['08-trying-to-get-around-it', '#trying-to-get-around-it'],
                  ['09-money-out-one-rule-per-path', '#money']];
   for (const [name, sel] of shots) {

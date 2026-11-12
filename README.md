@@ -30,8 +30,8 @@ Open, cheap model improvement only works if one question has a good answer: **ho
 
 | | |
 |---|---|
-| **A judge that writes the exam in a TEE** | An [OutLayer](https://outlayer.ai) WebAssembly module in Intel TDX. Code designs each task from the enclave's randomness; a model in NEAR AI's confidential inference writes the wording; a second model reads it back; code decides admission. Tasks leave the enclave only as ciphertexts and hashes. |
-| **Keys bound to one build** | The judge runs straight from its wasm URL, so OutLayer derives its keys from the build's sha256. Any other build — a later version of this very code too — cannot open the pool or sign as the judge. |
+| **A judge that writes the exam in a TEE** | An [OutLayer](https://outlayer.ai) app: a WebAssembly program running inside an Intel TDX enclave. Code designs each task from the enclave's randomness; a model in NEAR AI's confidential inference writes the wording; a second model reads it back; code decides admission. Tasks leave the enclave only as ciphertexts and hashes. |
+| **Keys bound to one build** | The judge runs straight from its published file, so its keys — from the NEAR MPC network's confidential key derivation (CKD) — are bound to the file's sha256. Any other build — a later version of this very code too — cannot open the pool or sign as the judge. |
 | **Duels decided by statistics, not by luck** | Champion and challenger answer the same tasks; a sequential test (SPRT) decides on their disagreements; a record must be confirmed on fresh tasks, and its gain is measured there. |
 | **A season contract on NEAR** | Merkle commitment before any duel, every signed result (lost duels too), the evidence, a sponsors' pool and an NEP-141 progress token minted for confirmed gains. Locked: no key can change it. |
 | **`arena-verify`** | Re-checks a whole season from NEAR state alone: the root, every signature, every revealed task against its leaf, every model answer against its TEE signature and Intel quote, every score with the same checker code, every duel and every token. |
@@ -183,7 +183,7 @@ New here: **no human authors the tasks**, the commitment comes from attested cod
 ## What you still trust
 
 - **The hardware**: Intel TDX and NVIDIA confidential GPUs, verified against Intel's and NVIDIA's own services.
-- **OutLayer's keystore and workers** (both in TDX, measurements approved on NEAR), for deriving a build's keys only for that build and reporting a run's caller truthfully.
+- **OutLayer's workers and the NEAR MPC network's key derivation** (workers in TDX, their measurements approved on NEAR), for giving a build's keys only to that build and reporting a run's caller truthfully.
 - **NEAR AI's deployment**, for which weights stand behind a model name.
 
 Not the operator, not the organiser, and not this README.
@@ -193,7 +193,7 @@ Not the operator, not the organiser, and not this README.
 | What | How | Where |
 |---|---|---|
 | The judge in a TEE | OutLayer runs the wasm in Intel TDX, directly from its URL | [`judge/`](judge/) |
-| Keys bound to the build | OutLayer's keystore derives `judge` (signing) and `pool` (encryption) from the build's sha256 | [`judge/manifest.json`](judge/manifest.json) |
+| Keys bound to the build | `judge` (signing) and `pool` (encryption) come from the NEAR MPC network's confidential key derivation (CKD), bound to the build's sha256 | [`judge/manifest.json`](judge/manifest.json) |
 | A secret for one build | the NEAR AI key is a secret row for this build's hash, readable only by the operator | [`scripts/season.py`](scripts/season.py) |
 | NEAR RPC from the enclave | the judge checks that the arena has no full-access key | [`judge/src/chain.rs`](judge/src/chain.rs) |
 | Yield/resume | the arena calls `request_execution`; the signed result returns in its own callback | [`contract/src/lib.rs`](contract/src/lib.rs) |

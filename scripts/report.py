@@ -128,88 +128,153 @@ footer { border-top:1px solid var(--line); margin-top:80px; padding-top:22px; co
 """
 
 # The architecture: who talks to whom, and where the trust boundaries are.
-ARCH_SVG = """<svg viewBox='0 0 1100 650' xmlns='http://www.w3.org/2000/svg' font-family='IBM Plex Sans, sans-serif' font-size='13'>
+ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1d1b16">
 <defs>
- <marker id='a' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0,0 L10,5 L0,10 z' fill='#c8442b'/></marker>
- <marker id='b' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0,0 L10,5 L0,10 z' fill='#1d1b16'/></marker>
- <pattern id='hatch' width='8' height='8' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'><line x1='0' y1='0' x2='0' y2='8' stroke='#ece5d6' stroke-width='3'/></pattern>
+ <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d1b16"/></marker>
 </defs>
-<style>.t{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:16px}.s{fill:#6b6458;font-size:12.5px}.m{font-family:'IBM Plex Mono',monospace;font-size:11px}
-.zone{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;fill:#c8442b}.nt{fill:#fff;font:600 12px 'IBM Plex Mono',monospace}</style>
-<text x='20' y='28' class='zone'>PEOPLE · NEAR ACCOUNTS</text>
-<rect x='20' y='40' width='200' height='46' fill='#fffdf8' stroke='#1d1b16'/><text x='34' y='60' class='t'>Sponsors</text><text x='34' y='77' class='s'>fund the season's pool</text>
-<rect x='20' y='98' width='200' height='46' fill='#fffdf8' stroke='#1d1b16'/><text x='34' y='118' class='t'>Entrants</text><text x='34' y='135' class='s'>put a model forward</text>
-<rect x='20' y='156' width='200' height='46' fill='#fffdf8' stroke='#1d1b16'/><text x='34' y='176' class='t'>Operator</text><text x='34' y='193' class='s'>runs the season, reads nothing</text>
-<text x='270' y='28' class='zone'>NEAR TESTNET</text>
-<rect x='270' y='40' width='300' height='200' fill='#fffdf8' stroke='#1d1b16' stroke-width='2'/>
-<text x='286' y='64' class='t'>Arena contract — locked</text><text x='286' y='82' class='s'>no access key: its code cannot change</text>
-<text x='286' y='106' class='m'>· Merkle root of the pool, fixed at seal</text>
-<text x='286' y='125' class='m'>· leaves and ciphertexts of every task</text>
-<text x='286' y='144' class='m'>· the judge's build hash and key</text>
-<text x='286' y='163' class='m'>· duels, signed results, evidence</text>
-<text x='286' y='182' class='m'>· the test (SPRT), the sponsors' pool</text>
-<text x='286' y='201' class='m'>· NEP-141 progress token</text>
-<text x='286' y='226' class='s'>accepts a result only with the judge's signature</text>
-<rect x='270' y='262' width='300' height='56' fill='url(#hatch)' stroke='#1d1b16'/>
-<text x='286' y='286' class='t'>OutLayer contract</text><text x='286' y='304' class='s'>request_execution · yield / resume</text>
-<text x='620' y='28' class='zone'>OUTLAYER · INTEL TDX</text>
-<rect x='610' y='36' width='230' height='330' fill='none' stroke='#1d1b16' stroke-dasharray='6 4'/>
-<rect x='626' y='52' width='198' height='168' fill='#1d1b16'/>
-<text x='640' y='76' class='t' fill='#f6f2ea'>Judge</text><text x='640' y='94' class='s' fill='#d9d2c4'>one wasm, run by its URL</text>
-<text x='640' y='118' class='m' fill='#efe9dc'>designs, admits tasks</text>
-<text x='640' y='136' class='m' fill='#efe9dc'>seals each to its build</text>
-<text x='640' y='154' class='m' fill='#efe9dc'>obeys only a locked arena</text>
-<text x='640' y='172' class='m' fill='#efe9dc'>checks every answer's TEE</text>
-<text x='640' y='190' class='m' fill='#efe9dc'>scores with code</text>
-<text x='640' y='208' class='m' fill='#efe9dc'>signs the result</text>
-<rect x='626' y='250' width='198' height='96' fill='#fffdf8' stroke='#1d1b16'/>
-<text x='640' y='274' class='t'>Keystore</text><text x='640' y='292' class='s'>derives the judge's keys</text>
-<text x='640' y='311' class='m'>keys = f(sha256(wasm))</text>
-<text x='640' y='330' class='s'>another build gets other keys</text>
-<text x='880' y='28' class='zone'>NEAR AI · TDX + NVIDIA CC</text>
-<rect x='870' y='36' width='210' height='330' fill='none' stroke='#1d1b16' stroke-dasharray='6 4'/>
-<rect x='886' y='52' width='178' height='70' fill='#1d1b16'/><text x='900' y='76' class='t' fill='#f6f2ea'>Writer</text><text x='900' y='96' class='m' fill='#efe9dc'>DeepSeek-V4.1-Flash</text><text x='900' y='112' class='s' fill='#d9d2c4'>words the tasks</text>
-<rect x='886' y='134' width='178' height='70' fill='#1d1b16'/><text x='900' y='158' class='t' fill='#f6f2ea'>Reader</text><text x='900' y='178' class='m' fill='#efe9dc'>Qwen3.8-27B</text><text x='900' y='194' class='s' fill='#d9d2c4'>reads them back</text>
-<rect x='886' y='216' width='178' height='130' fill='#1d1b16'/><text x='900' y='240' class='t' fill='#f6f2ea'>Participants</text>
-<text x='900' y='262' class='m' fill='#efe9dc'>Qwen3-VL-30B</text><text x='900' y='280' class='m' fill='#efe9dc'>Qwen3.6-35B</text><text x='900' y='298' class='m' fill='#efe9dc'>GLM-5.3-flash</text>
-<text x='900' y='322' class='s' fill='#d9d2c4'>every answer signed</text><text x='900' y='338' class='s' fill='#d9d2c4'>inside its TEE</text>
-<text x='20' y='430' class='zone'>PUBLIC SERVICES</text>
-<rect x='20' y='442' width='230' height='56' fill='#fffdf8' stroke='#1d1b16'/><text x='34' y='466' class='t'>FastFS</text><text x='34' y='484' class='s'>the judge's wasm, by its sha256</text>
-<rect x='610' y='442' width='230' height='56' fill='#fffdf8' stroke='#1d1b16'/><text x='624' y='466' class='t'>Intel PCS · NVIDIA NRAS</text><text x='624' y='484' class='s'>verify every TDX quote and GPU</text>
-<rect x='270' y='560' width='570' height='70' fill='#f6e1d9' stroke='#c8442b' stroke-width='2'/>
-<text x='286' y='586' class='t'>Anyone: arena-verify, or this page</text>
-<text x='286' y='606' class='s'>reads the arena over NEAR RPC and re-runs the judge's own code: the root, every signature,</text>
-<text x='286' y='622' class='s'>every task against its leaf, every answer against its TEE signature and Intel quote, every score</text>
-<line x1='220' y1='120' x2='266' y2='120' stroke='#c8442b' stroke-width='2' marker-end='url(#a)'/>
-<line x1='420' y1='240' x2='420' y2='258' stroke='#c8442b' stroke-width='2' marker-end='url(#a)'/>
-<path d='M570 290 C 595 290, 595 160, 622 160' fill='none' stroke='#c8442b' stroke-width='2' marker-end='url(#a)'/>
-<line x1='725' y1='222' x2='725' y2='246' stroke='#c8442b' stroke-width='2' marker-start='url(#a)' marker-end='url(#a)'/>
-<line x1='826' y1='100' x2='882' y2='100' stroke='#c8442b' stroke-width='2' marker-start='url(#a)' marker-end='url(#a)'/>
-<line x1='826' y1='180' x2='882' y2='262' stroke='#c8442b' stroke-width='2' marker-start='url(#a)' marker-end='url(#a)'/>
-<line x1='725' y1='368' x2='725' y2='438' stroke='#c8442b' stroke-width='2' marker-end='url(#a)'/>
-<path d='M622 70 C 596 70, 596 56, 574 56' fill='none' stroke='#c8442b' stroke-width='2' marker-end='url(#a)'/>
-<path d='M180 442 C 180 380, 560 380, 622 206' fill='none' stroke='#1d1b16' stroke-width='1.5' stroke-dasharray='4 4' marker-end='url(#b)'/>
-<line x1='420' y1='556' x2='420' y2='324' stroke='#1d1b16' stroke-width='1.5' stroke-dasharray='4 4' marker-end='url(#b)'/>
-<g><circle cx='243' cy='108' r='11' fill='#c8442b'/><text x='243' y='112' text-anchor='middle' class='nt'>1</text></g>
-<g><circle cx='604' cy='238' r='11' fill='#c8442b'/><text x='604' y='242' text-anchor='middle' class='nt'>2</text></g>
-<g><circle cx='746' cy='234' r='11' fill='#c8442b'/><text x='746' y='238' text-anchor='middle' class='nt'>3</text></g>
-<g><circle cx='854' cy='86' r='11' fill='#c8442b'/><text x='854' y='90' text-anchor='middle' class='nt'>4</text></g>
-<g><circle cx='862' cy='236' r='11' fill='#c8442b'/><text x='862' y='240' text-anchor='middle' class='nt'>5</text></g>
-<g><circle cx='746' cy='404' r='11' fill='#c8442b'/><text x='746' y='408' text-anchor='middle' class='nt'>6</text></g>
-<g><circle cx='598' cy='42' r='11' fill='#c8442b'/><text x='598' y='46' text-anchor='middle' class='nt'>7</text></g>
-<g><circle cx='440' cy='540' r='11' fill='#1d1b16'/><text x='440' y='544' text-anchor='middle' class='nt'>8</text></g>
-</svg>"""
+<style>
+ .zone{font-family:'IBM Plex Mono',Menlo,monospace;font-size:12px;font-weight:600;letter-spacing:.12em;fill:#c8442b}
+ .zsub{font-size:12.5px;fill:#6b6458}
+ .h{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:20px}
+ .hp{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:18px}
+ .mu{font-size:12.5px;fill:#6b6458}
+ .b{font-weight:600;font-size:13px}
+ .sm{font-size:12px;fill:#6b6458}
+ .lab{font-size:12px;fill:#1d1b16}
+ .labm{font-size:12px;fill:#6b6458}
+ .dk{fill:#f6f2ea}
+ .dkm{fill:#cfc6b6;font-size:12.5px}
+ .acc{font-family:'IBM Plex Mono',Menlo,monospace;font-size:12px;fill:#eea795}
+ .num{font-family:'IBM Plex Mono',Menlo,monospace;font-size:13px;font-weight:600;fill:#fff}
+ .arr{stroke:#1d1b16;stroke-width:1.6;fill:none}
+</style>
 
-LEGEND = [
-    "The operator calls the arena: <code>generate</code>, <code>seal</code>, <code>run_portion</code>. Sponsors and entrants call it with their own accounts.",
-    "The arena calls OutLayer's <code>request_execution</code> with the judge's wasm URL (fetched from FastFS by its sha256) and, for a duel, the next sealed tasks.",
-    "In the enclave, the keystore derives the judge's signing and sealing keys from the wasm's sha256 — for this build only.",
-    "The judge asks a model in NEAR AI's TEE to word the tasks it designed, and another to read them back.",
-    "In a duel, both participants answer the same tasks; each answer comes back signed inside the model's TEE.",
-    "The judge verifies each model's Intel TDX quote and NVIDIA GPU verdict, and that its key signed every answer.",
-    "The judge's signed result returns to the arena's own callback; the contract checks the build's key, runs the test, mints.",
-    "Anyone re-checks everything from NEAR state — with <code>arena-verify</code>, or in this page.",
-]
+<!-- ============ zone headers ============ -->
+<text x="20" y="26" class="zone">PEOPLE</text>
+<text x="20" y="44" class="zsub">each one a NEAR account</text>
+<text x="330" y="26" class="zone">NEAR BLOCKCHAIN</text>
+<text x="330" y="44" class="zsub">the public record and the money</text>
+<text x="750" y="26" class="zone">HARDWARE ENCLAVES · TEE</text>
+<text x="750" y="44" class="zsub">the neutral ground: nobody can look inside</text>
+
+<!-- ============ people ============ -->
+<rect x="20" y="60" width="200" height="72" rx="10" fill="#fffdf8" stroke="#1d1b16"/>
+<text x="36" y="88" class="hp">Sponsors</text>
+<text x="36" y="110" class="mu">want a better model</text>
+
+<rect x="20" y="160" width="200" height="72" rx="10" fill="#fffdf8" stroke="#1d1b16"/>
+<text x="36" y="188" class="hp">Entrants</text>
+<text x="36" y="210" class="mu">challenge the champion</text>
+
+<rect x="20" y="290" width="200" height="104" rx="10" fill="#fffdf8" stroke="#1d1b16"/>
+<text x="36" y="318" class="hp">Anyone</text>
+<text x="36" y="340" class="mu">re-checks every claim</text>
+<text x="36" y="357" class="mu">from the chain, with the</text>
+<text x="36" y="374" class="mu">judge's own code</text>
+<circle cx="220" cy="290" r="12" fill="#c8442b"/><text x="220" y="294.5" text-anchor="middle" class="num">2</text>
+
+<!-- ============ blockchain ============ -->
+<rect x="330" y="60" width="300" height="272" fill="#fffdf8" stroke="#1d1b16" stroke-width="2"/>
+<text x="348" y="90" class="h">Arena</text>
+<rect x="544" y="74" width="70" height="22" rx="11" fill="#c8442b"/>
+<text x="579" y="89.5" text-anchor="middle" class="num" style="font-size:12px;letter-spacing:.08em">LOCKED</text>
+<text x="348" y="112" class="mu">one smart contract per season;</text>
+<text x="348" y="129" class="mu">no access keys, so no rule can change</text>
+<line x1="348" y1="142" x2="612" y2="142" stroke="#e4dccd"/>
+<text x="348" y="164" class="b">Exam commitment</text>
+<text x="348" y="181" class="sm">one Merkle root, fixed before any duel</text>
+<text x="348" y="208" class="b">Judge's code hash and key</text>
+<text x="348" y="225" class="sm">the only signature it accepts</text>
+<text x="348" y="252" class="b">Every result, signed</text>
+<text x="348" y="269" class="sm">lost duels too, then each task revealed</text>
+<text x="348" y="296" class="b">Prize pool and progress tokens</text>
+<text x="348" y="313" class="sm">confirmed gains mint, tokens redeem</text>
+<circle cx="630" cy="300" r="12" fill="#c8442b"/><text x="630" y="304.5" text-anchor="middle" class="num">3</text>
+
+<rect x="330" y="350" width="300" height="94" fill="#f6f2ea" stroke="#1d1b16" stroke-dasharray="3 3"/>
+<text x="348" y="372" class="zone" style="font-size:12px">WHY A CHAIN</text>
+<text x="348" y="392" class="lab">· nobody holds the money</text>
+<text x="348" y="410" class="lab">· results public and timestamped</text>
+<text x="348" y="428" class="lab">· the judge checks who called it</text>
+
+<!-- ============ enclaves ============ -->
+<rect x="738" y="54" width="354" height="502" rx="6" fill="none" stroke="#1d1b16" stroke-dasharray="6 4"/>
+
+<rect x="750" y="66" width="330" height="268" rx="4" fill="#1d1b16"/>
+<text x="768" y="96" class="h dk">Judge</text>
+<text x="1062" y="94" text-anchor="end" class="acc">on OutLayer · Intel TDX</text>
+<text x="768" y="118" class="dkm">a WebAssembly program, run from its</text>
+<text x="768" y="135" class="dkm">published file by hash, never upgraded</text>
+<line x1="768" y1="147" x2="1062" y2="147" stroke="#4a463d"/>
+<g class="dk" font-size="13">
+ <text x="768" y="168">· designs tasks from enclave randomness</text>
+ <text x="768" y="187">· seals each one, publishes its hash</text>
+ <text x="768" y="206">· works only for a keyless arena</text>
+ <text x="768" y="225">· checks each model's attestation</text>
+ <text x="768" y="244">· scores with open checker code, signs</text>
+</g>
+<rect x="764" y="258" width="302" height="64" rx="4" fill="none" stroke="#eea795" stroke-width="1.2"/>
+<text x="778" y="278" class="b dk">Keys from NEAR MPC network (CKD)</text>
+<text x="778" y="296" class="dkm" style="font-size:12px">bound to this code's hash: any other</text>
+<text x="778" y="312" class="dkm" style="font-size:12px">version gets other keys, opens nothing</text>
+<circle cx="750" cy="66" r="12" fill="#c8442b"/><text x="750" y="70.5" text-anchor="middle" class="num">1</text>
+
+<rect x="750" y="376" width="330" height="168" rx="4" fill="#1d1b16"/>
+<text x="768" y="406" class="h dk">Models</text>
+<text x="1062" y="404" text-anchor="end" class="acc">NEAR AI</text>
+<text x="768" y="428" class="dkm">confidential inference: Intel TDX</text>
+<text x="768" y="445" class="dkm">and NVIDIA confidential GPUs</text>
+<line x1="768" y1="457" x2="1062" y2="457" stroke="#4a463d"/>
+<g class="dk" font-size="13">
+ <text x="768" y="478">· one words each task, a second reads it back</text>
+ <text x="768" y="497">· champion vs challenger, same tasks</text>
+ <text x="768" y="516">· every answer signed inside its TEE</text>
+</g>
+<text x="768" y="536" class="acc" style="font-size:12px">next: weight deltas, served by hash</text>
+
+<!-- ============ arrows ============ -->
+<!-- sponsor -> arena -->
+<line x1="222" y1="100" x2="326" y2="100" class="arr" marker-end="url(#ah)"/>
+<text x="275" y="92" text-anchor="middle" class="lab">funds the pool</text>
+<!-- entrant <-> arena -->
+<line x1="222" y1="186" x2="326" y2="186" class="arr" marker-end="url(#ah)"/>
+<text x="275" y="178" text-anchor="middle" class="lab">enters a model</text>
+<line x1="326" y1="212" x2="222" y2="212" class="arr" marker-end="url(#ah)"/>
+<text x="275" y="228" text-anchor="middle" class="labm">paid by rule</text>
+<!-- arena -> anyone -->
+<line x1="326" y1="320" x2="222" y2="320" class="arr" marker-end="url(#ah)"/>
+<text x="275" y="312" text-anchor="middle" class="lab">public record</text>
+<!-- arena <-> judge -->
+<line x1="632" y1="110" x2="746" y2="110" class="arr" marker-end="url(#ah)"/>
+<text x="689" y="102" text-anchor="middle" class="lab">calls the judge</text>
+<line x1="746" y1="190" x2="632" y2="190" class="arr" marker-end="url(#ah)"/>
+<text x="689" y="182" text-anchor="middle" class="lab">signed result</text>
+<text x="689" y="206" text-anchor="middle" class="labm">into its callback</text>
+<!-- judge <-> models -->
+<line x1="860" y1="336" x2="860" y2="372" class="arr" marker-end="url(#ah)"/>
+<text x="850" y="359" text-anchor="end" class="lab">tasks</text>
+<line x1="970" y1="372" x2="970" y2="336" class="arr" marker-end="url(#ah)"/>
+<text x="980" y="359" class="lab">signed answers</text>
+
+<!-- ============ promises ============ -->
+<g transform="translate(20,580)">
+ <circle cx="12" cy="18" r="12" fill="#c8442b"/><text x="12" y="22.5" text-anchor="middle" class="num">1</text>
+ <text x="32" y="16" class="b">An exam with no keeper</text>
+ <text x="32" y="34" class="sm">a test set no one has seen, not even us</text>
+</g>
+<g transform="translate(385,580)">
+ <circle cx="12" cy="18" r="12" fill="#c8442b"/><text x="12" y="22.5" text-anchor="middle" class="num">2</text>
+ <text x="32" y="16" class="b">Scores anyone can re-check</text>
+ <text x="32" y="34" class="sm">signed in TEEs, re-run from the chain</text>
+</g>
+<g transform="translate(750,580)">
+ <circle cx="12" cy="18" r="12" fill="#c8442b"/><text x="12" y="22.5" text-anchor="middle" class="num">3</text>
+ <text x="32" y="16" class="b">Prizes paid by rule</text>
+ <text x="32" y="34" class="sm">a bounty paid by a contract with no keys</text>
+</g>
+<line x1="20" y1="568" x2="1080" y2="568" stroke="#e4dccd"/>
+</svg>
+"""
 
 CLAIMS = [
     ("exam", "Commitment", "The exam was fixed before the first duel, and every task used came from it",
@@ -308,7 +373,7 @@ def main():
              "Scores come from open checker code. This page re-checks all of it in your browser, from NEAR state.</p></div>"
              "<div><h4>Prizes that pay by rule</h4><p>A sponsor funds a season; a model that proves it is better earns progress tokens "
              "that redeem for the pool — paid by a contract that trusts nothing but the judge's signature.</p></div></div>"
-             f"<p class=meta>A full season ran on NEAR testnet: {acct_link(acct)}. Source, tests and the command-line checker: "
+             f"<p class=meta>A full season ran on the NEAR blockchain (testnet): {acct_link(acct)}. Source, tests and the command-line checker: "
              f"<a href='{REPO}'>{REPO.split('//')[1]}</a>. Evidence saved with this page: <a href='{REPO}/tree/main/web/evidence'>web/evidence</a>.</p></header>")
 
     h.append("<h2><small>Proof</small>What this season proves</h2>")
@@ -322,11 +387,13 @@ def main():
         f"<ul class=how>{''.join(f'<li>{x}</li>' for x in how)}</ul><div class=result><span class=muted>Not checked yet.</span></div>"
         "<button class='recheck small'>Re-check</button></div>" for cid, tag, title, how in CLAIMS) + "</div>")
 
-    h.append("<h2><small>Architecture</small>Who does what, and what each part can prove</h2>")
-    h.append("<p>Two kinds of hardware enclave do the work, one public chain holds the record, and nobody in between holds a secret "
-             "that matters. Dark boxes run inside a TEE; dashed outlines are attested hardware.</p>")
+    h.append("<h2><small>Architecture</small>The exam lives where nobody can read it; the record and the money, where everybody can</h2>")
+    h.append("<p>Read it left to right. People are NEAR accounts. They only talk to the arena — one smart contract per season on the NEAR "
+             "blockchain, with no access keys, so its rules cannot change. Only the arena calls the judge, and only the judge talks to the "
+             "models; both run in hardware enclaves nobody can look inside. The numbers mark where each promise is enforced.</p>")
     h.append("<div class=arch>" + ARCH_SVG + "</div>")
-    h.append("<ol class=legend>" + "".join(f"<li><span>{i + 1}</span><div>{t}</div></li>" for i, t in enumerate(LEGEND)) + "</ol>")
+    h.append("<p class=muted>In this build the judge writes the tasks itself. A company's own private test set, sealed to the judge's "
+             "code the same way, is the natural next step — the arena does not need to change for it.</p>")
 
     h.append("<h2><small>The season</small>What happened on NEAR testnet</h2>")
     steps = [
@@ -340,9 +407,10 @@ def main():
     h.append("<ol class=steps>" + "".join(f"<li><span class=step>{i + 1}</span><span><b>{t}</b> {d}</span></li>" for i, (t, d) in enumerate(steps)) + "</ol>")
 
     h.append("<h2><small>Step 1</small>The judge</h2>")
-    h.append("<p>One WebAssembly module, run by OutLayer in an Intel TDX enclave directly from its URL — never as an upgradable project. "
-             "OutLayer's keystore derives its keys from the build's sha256 (<code>bind: \"wasm\"</code>): another build, ours included, "
-             "gets other keys. The build is reproducible: <code>./judge/build.sh</code> gives the same sha256.</p>")
+    h.append("<p>The judge is an OutLayer app: a WebAssembly program that runs inside an Intel TDX enclave. It is run straight from its "
+             "published file, named by the file's sha256 — never as an upgradable project. Its keys come from the NEAR MPC network's "
+             "confidential key derivation (CKD), bound to that hash (<code>bind: \"wasm\"</code>): any other build, ours included, gets "
+             "other keys. The build is reproducible: <code>./judge/build.sh</code> gives the same sha256.</p>")
     h.append(f"<table><tr><th>Build (sha256)</th><th>Judge key</th></tr><tr><td style='width:50%'><code>{e(state['judge_sha256'])}</code><br>"
              f"<a href='{e(s.judge_source(state['judge_sha256'])['url'])}'>the wasm on FastFS</a></td><td><code>{e(state['judge_key'])}</code></td></tr></table>")
     h.append(proof(["judge"], "The key the arena pinned is the key this exact build announced in its own on-chain run, and every result "
@@ -455,7 +523,7 @@ def main():
 
     h.append("<h2><small>Trust</small>What you still trust</h2><ul>"
              "<li><b>The hardware</b>: Intel TDX and NVIDIA confidential GPUs, verified against Intel's and NVIDIA's services. Physical attacks on a host are outside Intel's model.</li>"
-             "<li><b>OutLayer's keystore and workers</b> (both in TDX, measurements approved on NEAR) for deriving a build's keys only for that build and reporting a run's caller truthfully.</li>"
+             "<li><b>OutLayer's workers and the NEAR MPC network's key derivation</b> (workers in TDX, their measurements approved on NEAR) for giving a build's keys only to that build and reporting a run's caller truthfully.</li>"
              "<li><b>NEAR AI's deployment</b> for which weights stand behind a model name: a quote attests the signing key and the software stack, not a hash of the weights.</li>"
              "</ul><p>Not the operator, not the organiser, and not this page.</p>")
 
