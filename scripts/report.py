@@ -210,11 +210,12 @@ ARCH_SVG = """<svg class="arch-svg" viewBox="0 0 1100 640" xmlns="http://www.w3.
 <text x="348" y="296" class="b">Prize pool and progress tokens</text>
 <text x="348" y="313" class="sm">confirmed gains mint, tokens redeem</text>
 
-<rect x="330" y="350" width="300" height="94" fill="#f6f2ea" stroke="#1d1b16" stroke-dasharray="3 3"/>
+<rect x="330" y="350" width="300" height="112" fill="#f6f2ea" stroke="#1d1b16" stroke-dasharray="3 3"/>
 <text x="348" y="372" class="zone" style="font-size:12px">WHY A CHAIN</text>
 <text x="348" y="392" class="lab">· nobody holds the money</text>
 <text x="348" y="410" class="lab">· results public and timestamped</text>
-<text x="348" y="428" class="lab">· the judge checks who called it</text>
+<text x="348" y="428" class="lab">· entry deposits held by code, not by us</text>
+<text x="348" y="446" class="lab">· the judge checks who called it</text>
 
 <!-- ============ enclaves ============ -->
 <rect x="738" y="54" width="354" height="502" rx="6" fill="none" stroke="#1d1b16" stroke-dasharray="6 4"/>

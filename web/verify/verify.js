@@ -291,6 +291,11 @@ function dialog(id, title, body) {
   d.querySelector('.vclose').addEventListener('click', () => d.close());
   return d;
 }
+function show(d) {
+  d.showModal();
+  d.querySelector('.vclose').focus({ preventScroll: true });
+  d.scrollTop = 0;
+}
 let last = null;
 function render(res) {
   last = res;
@@ -315,14 +320,14 @@ function render(res) {
 function openClaim(id) {
   const card = document.querySelector(`[data-claim="${id}"]`);
   const c = CLAIMS[id];
-  dialog('vclaim', esc(card.querySelector('h4').textContent),
+  show(dialog('vclaim', esc(card.querySelector('h4').textContent),
     `<p class=muted>${last.live ? 'Read live from NEAR testnet.' : `NEAR's state at block ${last.saved.block_height}, saved ${esc(last.saved.saved_at)}.`} ` +
     `Every value in the middle column was computed by this page when it opened. Hover a shortened hash for the whole of it.</p>` +
-    Object.entries(c.groups).map(([g, rows]) => groupHtml(g, rows)).join('')).showModal();
+    Object.entries(c.groups).map(([g, rows]) => groupHtml(g, rows)).join('')));
 }
 function openHow() {
   const sv = last ? last.saved : null;
-  dialog('vhow', 'How this page checks the season',
+  show(dialog('vhow', 'How this page checks the season',
     `<p>Nothing here is a recorded result. When the page opens, it runs every check itself with the judge's own Rust code — the checkers, ` +
     `leaves, Merkle tree, request rebuild, ed25519 and EIP-191 — compiled to WebAssembly (<a href="verify/arena.wasm">arena.wasm</a>, built ` +
     `from <code>verify-web/</code>), and with Intel's quote verifier <code>dcap-qvl</code>, also as WebAssembly.</p>` +
@@ -337,7 +342,7 @@ function openHow() {
     `hashes to a digest that was signed. What a forged copy could still swap is the key and the root themselves. So read those, and everything else, from NEAR yourself:</p>` +
     `<p><button class=recheck id=vlive>Read everything live from NEAR and check again</button></p><p id=vlive-status class=muted></p>` +
     `<p class=muted>About 30 requests to public NEAR testnet RPC (FastNEAR, then near.org). The same checks also run from a terminal: ` +
-    `<code>cargo run --release -p arena-verify -- --arena ${esc(ARENA)}</code>.</p>`).showModal();
+    `<code>cargo run --release -p arena-verify -- --arena ${esc(ARENA)}</code>.</p>`));
   document.getElementById('vlive').addEventListener('click', async (e) => {
     const b = e.target, st = document.getElementById('vlive-status');
     b.disabled = true;
