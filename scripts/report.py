@@ -128,7 +128,7 @@ footer { border-top:1px solid var(--line); margin-top:80px; padding-top:22px; co
 """
 
 # The architecture: who talks to whom, and where the trust boundaries are.
-ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1d1b16">
+ARCH_SVG = """<svg class="arch-svg" viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1d1b16">
 <defs>
  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d1b16"/></marker>
 </defs>
@@ -147,6 +147,13 @@ ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" fon
  .acc{font-family:'IBM Plex Mono',Menlo,monospace;font-size:12px;fill:#eea795}
  .num{font-family:'IBM Plex Mono',Menlo,monospace;font-size:13px;font-weight:600;fill:#fff}
  .arr{stroke:#1d1b16;stroke-width:1.6;fill:none}
+ .hl{fill:none;stroke:#c8442b;stroke-width:3;stroke-dasharray:10 6;opacity:0;transition:opacity .15s;pointer-events:none}
+ .promise{cursor:pointer;outline:none}
+ .promise .hit{fill:#c8442b;fill-opacity:0}
+ .promise:hover .b,.promise:focus .b{fill:#c8442b}
+ .arch-svg:has(.p1:hover,.p1:focus) .hl-1,.arch-svg:has(.p2:hover,.p2:focus) .hl-2,.arch-svg:has(.p3:hover,.p3:focus) .hl-3{opacity:1;animation:march .7s linear infinite}
+ @keyframes march{to{stroke-dashoffset:-16}}
+ @media (prefers-reduced-motion:reduce){.hl{animation:none!important}}
 </style>
 
 <!-- ============ zone headers ============ -->
@@ -171,7 +178,6 @@ ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" fon
 <text x="36" y="340" class="mu">re-checks every claim</text>
 <text x="36" y="357" class="mu">from the chain, with the</text>
 <text x="36" y="374" class="mu">judge's own code</text>
-<circle cx="220" cy="290" r="12" fill="#c8442b"/><text x="220" y="294.5" text-anchor="middle" class="num">2</text>
 
 <!-- ============ blockchain ============ -->
 <rect x="330" y="60" width="300" height="272" fill="#fffdf8" stroke="#1d1b16" stroke-width="2"/>
@@ -189,7 +195,6 @@ ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" fon
 <text x="348" y="269" class="sm">lost duels too, then each task revealed</text>
 <text x="348" y="296" class="b">Prize pool and progress tokens</text>
 <text x="348" y="313" class="sm">confirmed gains mint, tokens redeem</text>
-<circle cx="630" cy="300" r="12" fill="#c8442b"/><text x="630" y="304.5" text-anchor="middle" class="num">3</text>
 
 <rect x="330" y="350" width="300" height="94" fill="#f6f2ea" stroke="#1d1b16" stroke-dasharray="3 3"/>
 <text x="348" y="372" class="zone" style="font-size:12px">WHY A CHAIN</text>
@@ -217,7 +222,6 @@ ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" fon
 <text x="778" y="278" class="b dk">Keys from NEAR MPC network (CKD)</text>
 <text x="778" y="296" class="dkm" style="font-size:12px">bound to this code's hash: any other</text>
 <text x="778" y="312" class="dkm" style="font-size:12px">version gets other keys, opens nothing</text>
-<circle cx="750" cy="66" r="12" fill="#c8442b"/><text x="750" y="70.5" text-anchor="middle" class="num">1</text>
 
 <rect x="750" y="376" width="330" height="168" rx="4" fill="#1d1b16"/>
 <text x="768" y="406" class="h dk">Models</text>
@@ -256,18 +260,34 @@ ARCH_SVG = """<svg viewBox="0 0 1100 640" xmlns="http://www.w3.org/2000/svg" fon
 <line x1="970" y1="372" x2="970" y2="336" class="arr" marker-end="url(#ah)"/>
 <text x="980" y="359" class="lab">signed answers</text>
 
+<!-- ============ where each promise is enforced (shown on hover) ============ -->
+<!-- 1: the judge seals the exam; the arena holds its commitment and the judge's identity -->
+<rect class="hl hl-1" x="745" y="61" width="340" height="278" rx="7"/>
+<rect class="hl hl-1" x="340" y="148" width="280" height="88" rx="4"/>
+<!-- 2: models sign in their TEE, the arena keeps every signed result, anyone re-runs it -->
+<rect class="hl hl-2" x="745" y="371" width="340" height="178" rx="7"/>
+<rect class="hl hl-2" x="340" y="236" width="280" height="44" rx="4"/>
+<rect class="hl hl-2" x="15" y="285" width="210" height="114" rx="13"/>
+<!-- 3: a keyless contract holds the pool and pays by rule -->
+<rect class="hl hl-3" x="325" y="55" width="310" height="282" rx="3"/>
+<rect class="hl hl-3" x="15" y="55" width="210" height="82" rx="13"/>
+<rect class="hl hl-3" x="15" y="155" width="210" height="82" rx="13"/>
+
 <!-- ============ promises ============ -->
-<g transform="translate(20,580)">
+<g class="promise p1" tabindex="0" transform="translate(20,580)">
+ <rect class="hit" x="-6" y="-6" width="340" height="52" rx="6"/>
  <circle cx="12" cy="18" r="12" fill="#c8442b"/><text x="12" y="22.5" text-anchor="middle" class="num">1</text>
  <text x="32" y="16" class="b">An exam with no keeper</text>
  <text x="32" y="34" class="sm">a test set no one has seen, not even us</text>
 </g>
-<g transform="translate(385,580)">
+<g class="promise p2" tabindex="0" transform="translate(385,580)">
+ <rect class="hit" x="-6" y="-6" width="340" height="52" rx="6"/>
  <circle cx="12" cy="18" r="12" fill="#c8442b"/><text x="12" y="22.5" text-anchor="middle" class="num">2</text>
  <text x="32" y="16" class="b">Scores anyone can re-check</text>
  <text x="32" y="34" class="sm">signed in TEEs, re-run from the chain</text>
 </g>
-<g transform="translate(750,580)">
+<g class="promise p3" tabindex="0" transform="translate(750,580)">
+ <rect class="hit" x="-6" y="-6" width="340" height="52" rx="6"/>
  <circle cx="12" cy="18" r="12" fill="#c8442b"/><text x="12" y="22.5" text-anchor="middle" class="num">3</text>
  <text x="32" y="16" class="b">Prizes paid by rule</text>
  <text x="32" y="34" class="sm">a bounty paid by a contract with no keys</text>
@@ -376,6 +396,14 @@ def main():
              f"<p class=meta>A full season ran on the NEAR blockchain (testnet): {acct_link(acct)}. Source, tests and the command-line checker: "
              f"<a href='{REPO}'>{REPO.split('//')[1]}</a>. Evidence saved with this page: <a href='{REPO}/tree/main/web/evidence'>web/evidence</a>.</p></header>")
 
+    h.append("<h2><small>Architecture</small>The exam lives where nobody can read it; the record and the money, where everybody can</h2>")
+    h.append("<p>Read it left to right. People are NEAR accounts. They only talk to the arena — one smart contract per season on the NEAR "
+             "blockchain, with no access keys, so its rules cannot change. Only the arena calls the judge, and only the judge talks to the "
+             "models; both run in hardware enclaves nobody can look inside. Point at a promise under the diagram to see where it is enforced.</p>")
+    h.append("<div class=arch>" + ARCH_SVG + "</div>")
+    h.append("<p class=muted>In this build the judge writes the tasks itself. A company's own private test set, sealed to the judge's "
+             "code the same way, is the natural next step — the arena does not need to change for it.</p>")
+
     h.append("<h2><small>Proof</small>What this season proves</h2>")
     h.append("<p>Six claims about the season below. None of them asks you to trust this page: the button reads the arena live from NEAR "
              "testnet and checks every claim in your browser with the judge's own code, compiled to WebAssembly, and Intel's quote "
@@ -386,14 +414,6 @@ def main():
         f"<div class=claim id='claim-{cid}' data-claim='{cid}'><div class=tag>{tag}</div><h4>{title}</h4>"
         f"<ul class=how>{''.join(f'<li>{x}</li>' for x in how)}</ul><div class=result><span class=muted>Not checked yet.</span></div>"
         "<button class='recheck small'>Re-check</button></div>" for cid, tag, title, how in CLAIMS) + "</div>")
-
-    h.append("<h2><small>Architecture</small>The exam lives where nobody can read it; the record and the money, where everybody can</h2>")
-    h.append("<p>Read it left to right. People are NEAR accounts. They only talk to the arena — one smart contract per season on the NEAR "
-             "blockchain, with no access keys, so its rules cannot change. Only the arena calls the judge, and only the judge talks to the "
-             "models; both run in hardware enclaves nobody can look inside. The numbers mark where each promise is enforced.</p>")
-    h.append("<div class=arch>" + ARCH_SVG + "</div>")
-    h.append("<p class=muted>In this build the judge writes the tasks itself. A company's own private test set, sealed to the judge's "
-             "code the same way, is the natural next step — the arena does not need to change for it.</p>")
 
     h.append("<h2><small>The season</small>What happened on NEAR testnet</h2>")
     steps = [
