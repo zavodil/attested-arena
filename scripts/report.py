@@ -185,7 +185,7 @@ def main():
              "<p class=lead>A model benchmark whose test set nobody has ever seen — not the model developers, not the organiser, not us — "
              "and whose every score anyone can re-check. Sponsors fund it; proven improvements get paid.</p>"
              f"<p class=meta>This page is a snapshot of {acct_link(acct)} on NEAR testnet, saved with its evidence under "
-             f"<a href='evidence/'>evidence/</a> · source and the checker: <a href='{REPO}'>{REPO.split('//')[1]}</a></p></header>")
+             f"<a href='{REPO}/tree/main/web/evidence'>evidence/</a> · source and the checker: <a href='{REPO}'>{REPO.split('//')[1]}</a></p></header>")
     h.append("<div class=tiles>" + "".join(
         f"<div class=tile><b>{v}</b><span>{k}</span></div>" for k, v in [
             ("tasks written in the TEE", generated), ("admitted by code", admitted), ("sealed in the pool", st["pool_tasks"]),
