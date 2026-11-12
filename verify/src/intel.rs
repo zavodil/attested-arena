@@ -13,6 +13,9 @@ const ROOT_CA_CRL: &str = "https://certificates.trustedservices.intel.com/IntelS
 pub struct Intel {
     http: reqwest::blocking::Client,
     cache: HashMap<String, QuoteCollateralV3>,
+    /// The same collateral as dcap-qvl reads it in JSON (binary fields in
+    /// hex), by `FMSPC-CA`, for the report's in-browser check.
+    pub exported: HashMap<String, serde_json::Value>,
 }
 
 pub struct Verified {
@@ -37,16 +40,21 @@ struct SignedQeIdentity<'a> {
 
 impl Intel {
     pub fn new() -> Self {
-        Intel { http: reqwest::blocking::Client::new(), cache: HashMap::new() }
+        Intel { http: reqwest::blocking::Client::new(), cache: HashMap::new(), exported: HashMap::new() }
     }
 
     pub fn verify(&mut self, quote: &[u8], now: u64) -> Result<Verified, String> {
         let parsed = Quote::parse(quote).map_err(|e| format!("the quote does not parse: {e}"))?;
         let fmspc = hex::encode_upper(parsed.fmspc().map_err(|e| format!("no FMSPC: {e}"))?);
         let ca = parsed.ca().map_err(|e| format!("no PCK issuer: {e}"))?.to_string();
-        let key = format!("{fmspc}/{ca}");
+        let key = format!("{fmspc}-{ca}");
         if !self.cache.contains_key(&key) {
             let c = self.collateral(&fmspc, &ca)?;
+            self.exported.insert(key.clone(), serde_json::json!({
+                "pck_crl_issuer_chain": c.pck_crl_issuer_chain, "root_ca_crl": hex::encode(&c.root_ca_crl), "pck_crl": hex::encode(&c.pck_crl),
+                "tcb_info_issuer_chain": c.tcb_info_issuer_chain, "tcb_info": c.tcb_info, "tcb_info_signature": hex::encode(&c.tcb_info_signature),
+                "qe_identity_issuer_chain": c.qe_identity_issuer_chain, "qe_identity": c.qe_identity, "qe_identity_signature": hex::encode(&c.qe_identity_signature),
+            }));
             self.cache.insert(key.clone(), c);
         }
         let report = dcap_qvl::verify::rustcrypto::verify(quote, &self.cache[&key], now).map_err(|e| format!("{e:#}"))?;

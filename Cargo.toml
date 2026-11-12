@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["core", "judge", "verify", "probe"]
+members = ["core", "judge", "verify", "probe", "verify-web"]
 # The arena contract builds with its own toolchain (cargo near, NEAR's wasm target).
 exclude = ["contract"]
 

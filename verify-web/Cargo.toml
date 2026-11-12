@@ -1,0 +1,18 @@
+[package]
+name = "arena-verify-web"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "The report's in-browser checks: the judge's own Rust code (checkers, leaves, Merkle tree, request rebuild) and the signature checks, compiled to WebAssembly with a JSON-in, JSON-out interface"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+arena-core = { path = "../core" }
+serde_json = "1.0"
+hex = "0.4"
+ed25519-dalek = { version = "2", default-features = false }
+k256 = { version = "0.13", default-features = false, features = ["ecdsa", "arithmetic"] }
+sha3 = { version = "0.10", default-features = false }

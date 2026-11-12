@@ -501,5 +501,12 @@ fn run(src: &Source, with_intel: bool) -> Result<Ledger, String> {
         l.check(format!("reveal {i}"), res);
     }
     println!("  {revealed_tasks} tasks opened and proven into the root");
+    // Intel's collateral, saved with the snapshot: a browser cannot fetch it
+    // from Intel's PCS (no CORS), and it is Intel-signed, so where it comes
+    // from does not matter.
+    if let (Some(i), Source::Rpc { export: Some(dir), .. }) = (&intel, src) {
+        let out = json!({ "fetched_at": now, "by_platform": i.exported });
+        std::fs::write(dir.join("intel-collateral.json"), serde_json::to_string(&out).unwrap()).map_err(|e| e.to_string())?;
+    }
     Ok(l)
 }

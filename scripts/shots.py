@@ -146,24 +146,27 @@ def main():
 const { chromium } = require(%s);
 (async () => {
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
-  await p.goto('file://%s');
-  const shots = [['05-the-season-at-a-glance', '#glance'], ['06-a-duel-and-an-opened-task', '#duels'],
-                 ['07-trying-to-get-around-it', '#trying-to-get-around-it'], ['08-money-out-one-rule-per-path', '#money'],
-                 ['09-arena-verify-re-checks-everything-from-chain', '#check-it-yourself']];
+  await p.goto('http://localhost:8765/', { waitUntil: 'networkidle' });
+  await p.click('.verify-bar button.recheck');
+  await p.waitForFunction(() => /checks passed|could not run/.test(document.querySelector('.verify-summary').textContent), null, { timeout: 240000 });
+  const shots = [['05-what-this-season-proves-checked-in-the-browser', '#what-this-season-proves'],
+                 ['06-architecture', '#who-does-what-and-what-each-part-can-prove'],
+                 ['07-a-duel-and-an-opened-task', '#duels'], ['08-trying-to-get-around-it', '#trying-to-get-around-it'],
+                 ['09-money-out-one-rule-per-path', '#money']];
   for (const [name, sel] of shots) {
     const el = p.locator(sel); if (await el.count() === 0) { console.log('missing ' + sel); continue; }
     await el.first().screenshot({ path: '%s/' + name + '.png' }); console.log('ok   ' + name);
   }
   await b.close();
 })();
-""" % (json.dumps(os.path.join(node, "node_modules", "playwright")), os.path.join(s.ROOT, "web", "index.html"), OUT))
+""" % (json.dumps(os.path.join(node, "node_modules", "playwright")), OUT))
     r = subprocess.run(["node", script], capture_output=True, text=True, timeout=300)
     print(r.stdout.strip() or r.stderr[-400:])
     from PIL import Image, ImageChops
     for f in sorted(os.listdir(OUT)):
         path = os.path.join(OUT, f)
         im = Image.open(path).convert("RGB")
-        if f.startswith("06-"):
+        if f.startswith("07-"):
             im = im.crop((0, 0, im.width, min(im.height, 2600)))  # the first duel and its opened task
         bg = Image.new("RGB", im.size, im.getpixel((im.width - 1, im.height - 1)))
         box = ImageChops.difference(im, bg).getbbox()

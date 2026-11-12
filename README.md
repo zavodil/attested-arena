@@ -1,28 +1,30 @@
 # Attested Arena
 
-**A model benchmark whose test set nobody has ever seen — not the model developers, not the organiser, not us — and whose every score anyone can re-check. Sponsors fund it; proven improvements get paid.**
+**Model competitions anyone can fund and everyone can trust.**
 
 Built at NEAR HACKATHON (November 2026) · tracks: **Privacy & Private AI**, **AI Security & Defense**
 
-> **[Open the report →](https://zavodil.github.io/attested-arena/)** — a full season that ran on NEAR testnet, every number with the evidence behind it ([`web/index.html`](web/index.html) in this repo).
->
-> **Check it yourself in three minutes, with no account and no key:** `cargo run --release -p arena-verify -- --snapshot web/evidence/snapshot` → `39 checks passed, 0 broken.`
+> **[Open the report and re-check the season in your browser →](https://zavodil.github.io/attested-arena/)** — one button reads the arena live from NEAR testnet and runs 631 checks with the judge's own code compiled to WebAssembly and Intel's quote verifier. Nothing on the page asks to be trusted.
 
----
+[Delta League](https://deltaleague.ai) just showed what an open community can do: in one week, people editing weights took a 0.8B model from 17.4% to 53.4%. The natural next step is to let anyone run competitions like that — on their own problems, with their own prize money — and still have every result trusted by people who were not in the room. That takes three things no leaderboard has had together:
 
-## Why
+| | |
+|---|---|
+| **An exam with no keeper** | Tasks are designed and sealed inside a TEE, bound to the exact build of the code that wrote them. The sponsor, the operator and we cannot read one before it is used — and each is used once. |
+| **Scores you can re-check** | Models answer inside NEAR AI's confidential inference and sign every answer there. Scores come from open checker code. Anyone re-checks all of it from NEAR state. |
+| **Prizes that pay by rule** | A sponsor funds a season; a model that proves it is better earns progress tokens that redeem for the pool — paid by a contract that trusts nothing but the judge's signature. |
 
-A community just pushed a 0.8B model from 17.4% to 53.4% in one week by editing its weights ([Delta League](https://deltaleague.ai)). That kind of open, cheap, fast model improvement only works if one question has a good answer: **how do you trust the results?**
+![What this season proves, checked in the browser](web/shots/05-what-this-season-proves-checked-in-the-browser.png)
 
-The answer everybody agrees on is a private evaluation set that no one has seen, that is not on the internet, and that runs on a model without being revealed to its developer. Today that set always has an owner who has seen it:
+## Why it matters
+
+Open, cheap model improvement only works if one question has a good answer: **how do you trust the results?** The accepted answer is a private evaluation set that no one has seen, that is not on the internet, and that runs on a model without being revealed to its developer. Today every such set has an owner who has seen it:
 
 - **Test sets leak.** Public benchmarks end up in training data. Even a private set leaks by design when it is run on a closed model: evaluating it means sending every question to the model's vendor.
 - **The holder of a private set is trusted on their word.** They saw it, they can change it, and nobody outside can check. FrontierMath's problems were funded by a lab it ranks, which had access to most of them.
-- **Leaderboards get fitted.** Every submission against a fixed hidden set returns a score; after enough of them, picking the best of many tries starts to look like progress. On a 500-task set the standard error is about 2 points — wider than many of the gaps a leaderboard is asked to rank.
+- **Leaderboards get fitted.** Every submission against a fixed hidden set returns a score; after enough of them, picking the best of many tries starts to look like progress. On a 500-task set the standard error is about 2 points.
 
-**Attested Arena removes the one person who has seen the test.** The tasks are created inside a TEE, sealed to the exact build of the code that created them, and committed on NEAR before the first duel. Models answer them inside NEAR AI's confidential inference. Every task is used once and revealed with its result, so anyone can re-check every score. Sponsors put money behind a season; a model that proves it is better gets paid, automatically, by a contract that trusts only the judge's signature.
-
-This is the neutral ground for **verifiable eval-as-a-service**: a company can fund a season on its own kind of problem and pay whoever improves a model at it — without anyone, including the company, being able to leak or tune the test.
+**Attested Arena removes the one person who has seen the test** — and makes the result something a company can put money behind. It is verifiable eval-as-a-service: a company funds a season on its own kind of problem and pays whoever improves a model at it, and nobody, the company included, can leak or tune the test.
 
 ## What we built
 
@@ -40,6 +42,7 @@ Rust (the toolchains are pinned in the repo) and an internet connection. No acco
 
 | Do | See |
 |---|---|
+| open the [report](https://zavodil.github.io/attested-arena/) and press **Re-check everything** | `631 checks passed, 0 failed — read from NEAR testnet RPC, checked in this browser.` |
 | `cargo test` | 42 tests: task families and their checkers, admission, Merkle proofs, SPRT error rates, the judge's attestation checks |
 | `(cd contract && cargo test)` | 16 tests, one claim each — a result signed by another build is refused, a copy of the champion earns nothing, money out is one rule per path |
 | `cargo run --release -p arena-verify -- --snapshot web/evidence/snapshot` | the season re-checked from the snapshot saved with the report, Intel quotes verified against Intel's PCS: `39 checks passed, 0 broken.` |
@@ -52,8 +55,6 @@ Rust (the toolchains are pinned in the repo) and an internet connection. No acco
 
 [`season5.attested-arena.testnet`](https://testnet.nearblocks.io/address/season5.attested-arena.testnet) ran end to end.
 
-![The season at a glance](web/shots/05-the-season-at-a-glance.png)
-
 - **The exam.** The judge wrote 104 tasks inside the TEE; code admitted 100 and sealed each to the judge's build. The Merkle root was fixed on chain before the first duel.
 - **A record.** `glm-5.3-flash` beat the base champion `Qwen3-VL-30B-A3B-Instruct`, passed the confirmation on fresh tasks, and gained **+33.33 points** there — minted as 33.33 progress tokens.
 - **A rejection.** `Qwen3.6-35B-A3B-FP8` lost all 6 of its disagreements with the new champion.
@@ -62,11 +63,13 @@ Rust (the toolchains are pinned in the repo) and an internet connection. No acco
 - **Money.** A sponsor's 5 NEAR went to the holder of the progress tokens; every entry deposit came back.
 - **Every task is public now**, each provable into the root committed before the season.
 
-![A duel and one of its tasks, opened](web/shots/06-a-duel-and-an-opened-task.png)
+![A duel and one of its tasks, opened](web/shots/07-a-duel-and-an-opened-task.png)
 
-![Trying to get around it](web/shots/07-trying-to-get-around-it.png)
+![Trying to get around it](web/shots/08-trying-to-get-around-it.png)
 
 ## How it works
+
+![Architecture](web/shots/06-architecture.png)
 
 ```mermaid
 sequenceDiagram
@@ -205,9 +208,10 @@ Not the operator, not the organiser, and not this README.
 | [`judge/`](judge/) | the OutLayer module; `build.sh` builds it reproducibly |
 | [`contract/`](contract/) | the season contract (near-sdk 5.9); `build.sh` builds it reproducibly in Docker |
 | [`verify/`](verify/) | `arena-verify`; `calibrate`, a development tool for tuning families outside any TEE |
+| [`verify-web/`](verify-web/) | the report's in-browser checks: the judge's own code (checkers, leaves, Merkle tree, request rebuild) plus ed25519 and EIP-191, compiled to `web/verify/arena.wasm` by `build.sh` |
 | [`probe/`](probe/) | an experiment: another build that declares the judge's key and tries to open a sealed task |
 | [`scripts/`](scripts/) | `season.py`, `run_season.sh`, `experiments.py`, `report.py`, `shots.py`, `tx.py` |
-| [`web/`](web/) | the report, its screenshots, and the evidence snapshot it was built from |
+| [`web/`](web/) | the report, its in-browser checker (`verify/`), its screenshots, and the evidence snapshot it was built from |
 
 ## Run a season yourself
 
@@ -225,7 +229,7 @@ scripts/report.py <season> --verify-output <file> && scripts/shots.py <season>
 - **Built in the window.** Everything in this repository was written from 2026-11-11 to 2026-11-14.
 - **Our other NEAR HACKATHON project:** [Provable AI Compliance](https://github.com/zavodil/near-attested-ai) — every AI request a company makes checked against a compliance framework in a TEE, with proof. Independent of this one: different problem, different code. Attested Arena reuses one piece of it — its checks of NEAR AI's attestation (Intel quote, NVIDIA verdict, EIP-191 response signature), adapted in [`judge/src/`](judge/src/) (`intel.rs`, `nvidia.rs`, `eip191.rs`, `nearai.rs`, `http.rs`).
 - **Pre-existing platform.** [OutLayer](https://outlayer.ai) (by the same author) and its SDK [`outlayer` 0.2.1](https://crates.io/crates/outlayer) existed before the hackathon; they are used as a platform, not changed.
-- **Libraries.** near-sdk and near-contract-standards 5.9, serde, serde_json, sha2, hex, base64, k256, sha3, dcap-qvl (Intel quote verification), wasi 0.13, reqwest, ed25519-dalek; Playwright for the screenshots.
+- **Libraries.** near-sdk and near-contract-standards 5.9, serde, serde_json, sha2, hex, base64, k256, sha3, dcap-qvl (Intel quote verification), wasi 0.13, reqwest, ed25519-dalek; in the browser, dcap-qvl compiled to WebAssembly (`web/verify/dcap-qvl/`, vendored from our other project, which took it from OutLayer's dashboard); Playwright for the screenshots.
 - **AI-written code.** The code, tests and texts were written with Claude Code (Anthropic), directed and reviewed by the author.
 
 ## License
