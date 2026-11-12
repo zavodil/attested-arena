@@ -105,7 +105,21 @@ code, .mono { font:14px/1.4 "IBM Plex Mono",ui-monospace,Menlo,monospace }
 button.recheck { font:600 15px "IBM Plex Sans",sans-serif; background:var(--ink); color:var(--paper); border:0; padding:12px 20px; cursor:pointer }
 button.recheck.small { font-size:13px; padding:7px 12px; margin-top:10px; align-self:flex-start; background:transparent; color:var(--ink); border:1px solid var(--ink) }
 button.recheck:disabled { opacity:.6; cursor:default } .verify-bar { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin:18px 0 6px }
-.verify-summary { font-size:15px; color:var(--muted) }
+.verify-summary { font-size:15px; color:var(--muted) } .verify-summary b.ok { color:var(--ok) } .verify-summary b.bad { color:var(--bad) }
+button.vhow, button.vlink { font:500 14px "IBM Plex Sans",sans-serif; background:transparent; color:var(--accent); border:1px solid var(--accent); padding:7px 12px; cursor:pointer }
+button.vlink { display:block; margin-top:10px; border:0; padding:0; text-align:left } button.vhow:hover, button.vlink:hover { text-decoration:underline }
+dialog.vdialog { width:min(1100px,94vw); max-height:88vh; padding:0; border:1px solid var(--ink); background:var(--paper); color:var(--ink) }
+dialog.vdialog::backdrop { background:rgba(29,27,22,.55) }
+.vhead { position:sticky; top:0; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 24px; background:var(--card); border-bottom:1px solid var(--line); z-index:1 }
+.vhead h3 { margin:0; font-size:22px } .vclose { font:400 28px/1 "IBM Plex Sans",sans-serif; background:none; border:0; cursor:pointer; color:var(--ink) }
+.vbody { padding:8px 24px 24px; font-size:15.5px } .vbody p { max-width:none } .vbody h4 { font-size:18px; margin:22px 0 4px }
+.vgroup h4 span { font:600 13px "IBM Plex Mono",monospace; margin-left:8px }
+table.vt td, table.vt th { font-size:13.5px; padding:6px 10px } table.vt td:first-child { width:18px; font-weight:600 } table.vt tr.vok td:first-child { color:var(--ok) } table.vt tr.vbad td:first-child { color:var(--bad) } table.vt tr.vbad { background:#fbeae6 }
+table.vt code { font-size:12.5px }
+.season { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:22px 0 10px; border:1px solid var(--line) }
+.season > div { padding:18px 20px; background:var(--card); border-right:1px solid var(--line) } .season > div:last-child { border-right:0 }
+.season h4 { margin:0 0 6px; font-size:22px } .season p, .season ul { margin:0; font-size:15px; color:#3b372f } .season ul { padding-left:18px } .season li { margin:3px 0 }
+.season .tag { font:600 12px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:8px }
 .proof { background:var(--card); border-left:4px solid var(--accent); padding:14px 20px; margin:18px 0; font-size:15.5px }
 .proof b.l { font:600 12px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:6px }
 .arch { margin:24px 0 8px; background:var(--card); border:1px solid var(--line); padding:10px } .arch svg { width:100%; height:auto; display:block }
@@ -124,7 +138,7 @@ td pre { background:#f3eee4; color:#222; margin:0; padding:8px 10px }
 ol.steps { padding-left:0; list-style:none } ol.steps li { margin:14px 0; display:flex; gap:12px } .step { flex:none; display:inline-flex; align-items:center; justify-content:center; background:var(--ink); color:var(--paper); width:30px; height:30px; font:600 14px "IBM Plex Mono",monospace }
 .shot { margin:22px 0 } .shot img { max-width:100%; border:1px solid var(--line); background:#fff } .shot figcaption { color:var(--muted); font-size:14px; margin-top:6px }
 footer { border-top:1px solid var(--line); margin-top:80px; padding-top:22px; color:var(--muted); font-size:14px }
-@media (max-width:800px) { .values, .proofs, .legend { grid-template-columns:1fr } .hero h1 { font-size:52px } }
+@media (max-width:800px) { .values, .proofs, .legend, .season { grid-template-columns:1fr } .hero h1 { font-size:52px } }
 """
 
 # The architecture: who talks to whom, and where the trust boundaries are.
@@ -181,10 +195,10 @@ ARCH_SVG = """<svg class="arch-svg" viewBox="0 0 1100 640" xmlns="http://www.w3.
 
 <!-- ============ blockchain ============ -->
 <rect x="330" y="60" width="300" height="272" fill="#fffdf8" stroke="#1d1b16" stroke-width="2"/>
-<text x="348" y="90" class="h">Arena</text>
+<text x="348" y="90" class="h" style="font-size:18px">Arena smart contract</text>
 <rect x="544" y="74" width="70" height="22" rx="11" fill="#c8442b"/>
 <text x="579" y="89.5" text-anchor="middle" class="num" style="font-size:12px;letter-spacing:.08em">LOCKED</text>
-<text x="348" y="112" class="mu">one smart contract per season;</text>
+<text x="348" y="112" class="mu">one per season;</text>
 <text x="348" y="129" class="mu">no access keys, so no rule can change</text>
 <line x1="348" y1="142" x2="612" y2="142" stroke="#e4dccd"/>
 <text x="348" y="164" class="b">Exam commitment</text>
@@ -387,8 +401,9 @@ def main():
              "That takes three things no leaderboard has had together: a test set nobody can leak or tune, scores nobody has to take on "
              "faith, and prizes that pay out by rule.</p>"
              "<div class=values>"
-             "<div><h4>An exam with no keeper</h4><p>Tasks are designed and sealed inside a TEE, bound to the exact build of the code that "
-             "wrote them. The sponsor, the operator and we cannot read one before it is used — and each is used once.</p></div>"
+             "<div><h4>An exam with no keeper</h4><p>Code inside the judge's enclave designs each task from its own randomness; a model in "
+             "NEAR AI's confidential inference only puts it into words. Each task is sealed to the exact build that made it and opened "
+             "once, in a duel — the sponsor, the operator and we cannot read one before it is used.</p></div>"
              "<div><h4>Scores you can re-check</h4><p>Models answer inside NEAR AI's confidential inference and sign every answer there. "
              "Scores come from open checker code. This page re-checks all of it in your browser, from NEAR state.</p></div>"
              "<div><h4>Prizes that pay by rule</h4><p>A sponsor funds a season; a model that proves it is better earns progress tokens "
@@ -401,30 +416,73 @@ def main():
              "blockchain, with no access keys, so its rules cannot change. Only the arena calls the judge, and only the judge talks to the "
              "models; both run in hardware enclaves nobody can look inside. Point at a promise under the diagram to see where it is enforced.</p>")
     h.append("<div class=arch>" + ARCH_SVG + "</div>")
-    h.append("<p class=muted>In this build the judge writes the tasks itself. A company's own private test set, sealed to the judge's "
-             "code the same way, is the natural next step — the arena does not need to change for it.</p>")
 
-    h.append("<h2><small>Proof</small>What this season proves</h2>")
-    h.append("<p>Six claims about the season below. None of them asks you to trust this page: the button reads the arena live from NEAR "
-             "testnet and checks every claim in your browser with the judge's own code, compiled to WebAssembly, and Intel's quote "
-             "verifier. The same checks run from a terminal with <code>arena-verify</code>.</p>")
-    h.append("<div class=verify-bar><button class=recheck>Re-check everything in this browser</button><span class=verify-summary>"
-             "Not checked yet. It reads a few megabytes from NEAR and takes about half a minute.</span></div>")
-    h.append("<div class=proofs>" + "".join(
-        f"<div class=claim id='claim-{cid}' data-claim='{cid}'><div class=tag>{tag}</div><h4>{title}</h4>"
-        f"<ul class=how>{''.join(f'<li>{x}</li>' for x in how)}</ul><div class=result><span class=muted>Not checked yet.</span></div>"
-        "<button class='recheck small'>Re-check</button></div>" for cid, tag, title, how in CLAIMS) + "</div>")
-
-    h.append("<h2><small>The season</small>What happened on NEAR testnet</h2>")
+    h.append("<h2><small>The season</small>Season 5: one prize, three challengers, a hundred sealed tasks</h2>")
+    h.append("<p>For the hackathon we ran the arena end to end on the NEAR blockchain (testnet). Seasons 0–4 were trial runs that shook "
+             "out the pipeline; season 5 is the one this page proves, from the first sealed task to the payout. The sponsor and the "
+             "entrants are our own test accounts. The judge runs on OutLayer, the models on NEAR AI's confidential inference; the money "
+             "is testnet NEAR.</p>")
+    cfg = st["config"]
+    sponsors = [t for t in log if t["method"] == "sponsor" and t["status"] == "ok"]
+    redeemed = {t["signer"] for t in log if t["method"] == "redeem" and t["status"] == "ok"}
+    fams = {}
+    for b in batches:
+        if "Done" in b["state"]:
+            fams[b["family"]] = fams.get(b["family"], 0) + 1
+    fam_names = {"seating": "who-sits-where puzzles", "lines": "texts written to exact rules"}
+    sprt_text = "a sequential test (H1: the challenger wins 70% of the tasks they disagree on; α 5%, β 10%)"
+    h.append("<div class=season>"
+             f"<div><div class=tag>The prize</div><h4>{pool:g} NEAR</h4><p>Put up by {', '.join(acct_link(t['signer']) for t in sponsors)} "
+             "and held by the arena. A model that proves a gain over the champion earns progress tokens, one per point of gain, that "
+             "redeem for the pool. With no record, the sponsor takes the pool back.</p></div>"
+             f"<div><div class=tag>The rules</div><h4>Fixed at deploy, unchangeable</h4><ul>"
+             f"<li>first champion: <b>{e(model_short(cfg['base_model']))}</b>; {len(cfg['models'])} models may enter</li>"
+             f"<li>entry deposit {int(cfg['entry_deposit']) / 1e24:g} NEAR, returned after the season</li>"
+             f"<li>both models answer the same {cfg['portion_size']} tasks per portion; {sprt_text} decides within {cfg['max_portions']} portions</li>"
+             "<li>a passed test earns a confirmation on fresh tasks; the gain is counted there only</li></ul></div>"
+             f"<div><div class=tag>The exam</div><h4>{admitted} sealed tasks</h4><p>{generated} written in {len(batches)} batches, "
+             f"{admitted} admitted by code: " + " and ".join(f"{fam_names.get(k, e(k))} ({v} batches)" for k, v in fams.items()) +
+             f". Designed by code in the judge, worded by {e(model_short(cfg['generator']))}, read back by {e(model_short(cfg['reader']))}. "
+             "The root was fixed before the first duel; each task is used once, then published.</p></div>"
+             "</div>")
+    erows = []
+    for d in duels:
+        entry = entries[d["entry"]]
+        oc = d["outcome"]
+        if isinstance(oc, dict) and "Record" in oc:
+            res = f"<span class=ok>record, +{oc['Record']['gain_centi'] / 100:.2f} points</span> — the new champion" + (", redeemed the pool" if entry["account"] in redeemed else "")
+        elif oc == "Rejected":
+            res = "<span class=bad>rejected</span> — the test found it no better"
+        elif oc == "NotProven":
+            res = "<span class=muted>not proven</span> — the pool ran out before the test could decide"
+        else:
+            res = e(str(oc or "running"))
+        same = " <span class=muted>(the champion's own model, entered again)</span>" if d["challenger_model"] == d["champion_model"] else ""
+        erows.append(f"<tr><td>{acct_link(entry['account'])}</td><td>{e(model_short(d['challenger_model']))}{same}</td>"
+                     f"<td>{e(model_short(d['champion_model']))}</td><td>{len(d['portions'])}</td><td>{res}</td></tr>")
+    h.append("<h3>The entrants</h3><table><tr><th>Entrant</th><th>Model</th><th>Against the champion</th><th>Portions</th><th>Result</th></tr>"
+             + "".join(erows) + "</table>")
     steps = [
         ("The judge was published and pinned.", f"Build <code>{short(state['judge_sha256'])}</code>, key <code>{short(state['judge_key'])}</code>, said by the build itself in {tx_link(state['identity_tx'])}."),
         ("The arena was deployed and locked.", f"{acct_link(acct)} has no access key: its code — which decides which tasks a portion may open — cannot change."),
-        ("The exam was written inside the TEE.", f"{len(batches)} batches: {generated} tasks written, {admitted} admitted by code, each sealed to the judge's build. Nobody saw them."),
+        ("The exam was made inside the enclaves.", f"{len(batches)} batches: code in the judge designed the tasks, a model in NEAR AI's TEE worded them; {generated} written, {admitted} admitted by code, each sealed to the judge's build. Nobody saw them."),
         ("The pool was committed.", f"Merkle root <code>{short(st['root'], 12)}</code> over {st['pool_tasks']} leaves, fixed by {tx_link(first_tx(log, 'seal') or '')} before any duel."),
         ("Models dueled.", f"{len(duels)} duels, {sum(1 for p in portions if 'Done' in p['state'])} judged portions, {used} tasks used once and revealed with their results, {2 * used} answers."),
         ("A record was confirmed and paid.", f"{len(records)} confirmed record; {minted / 100:.2f} progress tokens minted for the gain on the confirmation tasks; the sponsors' {pool:.2f} NEAR redeemed by their holder."),
     ]
-    h.append("<ol class=steps>" + "".join(f"<li><span class=step>{i + 1}</span><span><b>{t}</b> {d}</span></li>" for i, (t, d) in enumerate(steps)) + "</ol>")
+    h.append("<h3>What happened, in order</h3><ol class=steps>" + "".join(f"<li><span class=step>{i + 1}</span><span><b>{t}</b> {d}</span></li>" for i, (t, d) in enumerate(steps)) + "</ol>")
+
+    h.append("<h2><small>Proof</small>What this season proves</h2>")
+    h.append("<p>Six claims about season 5. None of them asks you to trust this page: as it opened, your browser checked every one "
+             "with the judge's own code, compiled to WebAssembly, and Intel's quote verifier, on NEAR's state for the season. Each card "
+             "lists its checks with the values computed; one button reads NEAR live and checks again. The same checks run from a terminal "
+             "with <code>arena-verify</code>.</p>")
+    h.append("<div class=verify-bar><span class=verify-summary>Checking in this browser…</span>"
+             "<button class=vhow>How is this checked, and from what data?</button></div>")
+    h.append("<div class=proofs>" + "".join(
+        f"<div class=claim id='claim-{cid}' data-claim='{cid}'><div class=tag>{tag}</div><h4>{title}</h4>"
+        f"<ul class=how>{''.join(f'<li>{x}</li>' for x in how)}</ul><div class=result><span class=muted>Checking…</span></div></div>" for cid, tag, title, how in CLAIMS) + "</div>")
+
 
     h.append("<h2><small>Step 1</small>The judge</h2>")
     h.append("<p>The judge is an OutLayer app: a WebAssembly program that runs inside an Intel TDX enclave. It is run straight from its "

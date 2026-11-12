@@ -4,13 +4,13 @@
 
 Built at NEAR HACKATHON (November 2026) · tracks: **Privacy & Private AI**, **AI Security & Defense**
 
-> **[Open the report and re-check the season in your browser →](https://zavodil.github.io/attested-arena/)** — one button reads the arena live from NEAR testnet and runs 631 checks with the judge's own code compiled to WebAssembly and Intel's quote verifier. Nothing on the page asks to be trusted.
+> **[Open the report and re-check the season in your browser →](https://zavodil.github.io/attested-arena/)** — as it opens, the page runs 631 checks with the judge's own code compiled to WebAssembly and Intel's quote verifier, each with the values it computed; one button repeats them on NEAR testnet's live state. Nothing on the page asks to be trusted.
 
 [Delta League](https://deltaleague.ai) just showed what an open community can do: in one week, people editing weights took a 0.8B model from 17.4% to 53.4%. The natural next step is to let anyone run competitions like that — on their own problems, with their own prize money — and still have every result trusted by people who were not in the room. That takes three things no leaderboard has had together:
 
 | | |
 |---|---|
-| **An exam with no keeper** | Tasks are designed and sealed inside a TEE, bound to the exact build of the code that wrote them. The sponsor, the operator and we cannot read one before it is used — and each is used once. |
+| **An exam with no keeper** | Code inside the judge's enclave designs each task from its own randomness; a model in NEAR AI's confidential inference only puts it into words. Each task is sealed to the exact build that made it and opened once, in a duel — the sponsor, the operator and we cannot read one before it is used. |
 | **Scores you can re-check** | Models answer inside NEAR AI's confidential inference and sign every answer there. Scores come from open checker code. Anyone re-checks all of it from NEAR state. |
 | **Prizes that pay by rule** | A sponsor funds a season; a model that proves it is better earns progress tokens that redeem for the pool — paid by a contract that trusts nothing but the judge's signature. |
 
@@ -42,7 +42,7 @@ Rust (the toolchains are pinned in the repo) and an internet connection. No acco
 
 | Do | See |
 |---|---|
-| open the [report](https://zavodil.github.io/attested-arena/) and press **Re-check everything** | `631 checks passed, 0 failed — read from NEAR testnet RPC, checked in this browser.` |
+| open the [report](https://zavodil.github.io/attested-arena/) — it checks the season as it opens; **How is this checked** → *Read everything live from NEAR* repeats it on live state | `631 checks passed, 0 failed` — in about a second from the state saved with the page, in about two reading NEAR live. Each claim opens a table of every check with the values computed. |
 | `cargo test` | 42 tests: task families and their checkers, admission, Merkle proofs, SPRT error rates, the judge's attestation checks |
 | `(cd contract && cargo test)` | 16 tests, one claim each — a result signed by another build is refused, a copy of the champion earns nothing, money out is one rule per path |
 | `cargo run --release -p arena-verify -- --snapshot web/evidence/snapshot` | the season re-checked from the snapshot saved with the report, Intel quotes verified against Intel's PCS: `39 checks passed, 0 broken.` |
@@ -94,7 +94,7 @@ sequenceDiagram
     A->>A: verify signature, run SPRT, mint on a confirmed record
 ```
 
-1. **The judge writes the exam inside a TEE.** Code designs each puzzle; a model writes its wording; a different model reads it back; code decides admission.
+1. **The judge makes the exam inside the enclaves.** Code in the judge designs each puzzle; a model writes its wording; a different model reads it back; code decides admission.
 2. **The pool is sealed and committed.** Only ciphertexts and leaf hashes leave the enclave. The contract fixes the Merkle root before any duel.
 3. **Entries.** Anyone enters a model with a deposit that always comes back.
 4. **Duels.** Both models answer the same unused tasks in portions; each answer is signed inside the model's TEE and checked against its Intel and NVIDIA attestation; code scores; SPRT decides; a record is confirmed on fresh tasks.

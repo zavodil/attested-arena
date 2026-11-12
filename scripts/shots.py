@@ -147,7 +147,6 @@ const { chromium } = require(%s);
 (async () => {
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
   await p.goto('http://localhost:8765/', { waitUntil: 'networkidle' });
-  await p.click('.verify-bar button.recheck');
   await p.waitForFunction(() => /checks passed|could not run/.test(document.querySelector('.verify-summary').textContent), null, { timeout: 240000 });
   const shots = [['05-what-this-season-proves-checked-in-the-browser', '#what-this-season-proves'],
                  ['06-architecture', 'section:has(.arch)'],
