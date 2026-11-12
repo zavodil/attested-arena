@@ -1,0 +1,453 @@
+[
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "4uFBk4wxuzPnbkweJW7NLB3iCwjMrb4MbnnfgvfzTnvK",
+  "status": "ok",
+  "time": 1794482351
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "lines",
+   "count": 8
+  },
+  "hash": "2xcABvVHcSJWZQvKVsahPSAGHoNA8JJDJFq7jx7BmNWh",
+  "status": "ok",
+  "time": 1794482394
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "HmHsDpxGBsWKgWjcQR43ZU3QPenNFnC4KWBVNRqTcZLP",
+  "status": "ok",
+  "time": 1794482431
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "lines",
+   "count": 8
+  },
+  "hash": "GcciwMtMY4etp9o5fTVJzaeRCBVaGFzAHxE2KTQJGRtf",
+  "status": "ok",
+  "time": 1794482463
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "3BbrWfDjddu63qfkrvA1yRyaprKeRxXKx6PhZSsndK8o",
+  "status": "ok",
+  "time": 1794482502
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "lines",
+   "count": 8
+  },
+  "hash": "DHacgXtiJDaGXkc5n5SjtSxv1jTzMpneGVtLQkgeRbDR",
+  "status": "ok",
+  "time": 1794482542
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "AWmcUore6qUa8VwhDor7KfcNRyrfNTr8FzQWCe9yggkn",
+  "status": "ok",
+  "time": 1794482582
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "lines",
+   "count": 8
+  },
+  "hash": "6LuJ7YTc1gsGymeQnM6M1XVKCPAUhr3qFt2HcMnYG6jW",
+  "status": "ok",
+  "time": 1794482632
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "EpT4Jva8fNdGAPTpfUsfSTnQcL2GMemk68pcPiGh4hs9",
+  "status": "ok",
+  "time": 1794482677
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "lines",
+   "count": 8
+  },
+  "hash": "6Qm57KwpLCPt59Lmw8W7i2r7eJ3hAuhMgzxrCb75fkmx",
+  "status": "ok",
+  "time": 1794482718
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "68fndvM16XwFemeRpdEBwNci964Jyu2yVwHP8Lkdi4fg",
+  "status": "ok",
+  "time": 1794482767
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "lines",
+   "count": 8
+  },
+  "hash": "ksfaM9HaVee7sAHycRvhJZeJcbeMVRj8n7WiJT4TYjG",
+  "status": "ok",
+  "time": 1794482808
+ },
+ {
+  "method": "generate",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "family": "seating",
+   "count": 8
+  },
+  "hash": "FsW21zzPw7MiffPQ7GMRgiHTe2KnM7eEcs1XpUpJDVef",
+  "status": "ok",
+  "time": 1794482843
+ },
+ {
+  "method": "seal",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "DUHXtS3F8MjRyLejUN17etswgLzVG9ZyGwbeJcRrkE81",
+  "status": "ok",
+  "time": 1794482848
+ },
+ {
+  "method": "sponsor",
+  "signer": "arena-sponsor.testnet",
+  "args": {},
+  "hash": "F7qBnUiB1r3yS7BjoDd1FFLCqKRc1TxKaeWpaFN2Gkph",
+  "status": "ok",
+  "time": 1794482852
+ },
+ {
+  "method": "enter",
+  "signer": "arena-bob.testnet",
+  "args": {
+   "model": "z-ai/glm-5.3-flash"
+  },
+  "hash": "7aDA6aHruWKqJwCiz5bCsdZDF7UCnWXYfpVHTquytPdY",
+  "status": "ok",
+  "time": 1794482856
+ },
+ {
+  "method": "enter",
+  "signer": "arena-alice.testnet",
+  "args": {
+   "model": "Qwen/Qwen3.6-35B-A3B-FP8"
+  },
+  "hash": "4xno5XCw2yG6ZDWsAMDc5UKna2C1FyyikUEVJyQbnx7Z",
+  "status": "ok",
+  "time": 1794482860
+ },
+ {
+  "method": "enter",
+  "signer": "arena-carol.testnet",
+  "args": {
+   "model": "z-ai/glm-5.3-flash"
+  },
+  "hash": "53nUEPFMi9rjnJvAP3YetS6SrPChHTrf4C6r5SLQqW5y",
+  "status": "ok",
+  "time": 1794482865
+ },
+ {
+  "method": "start_duel",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "EtFXKosQNff9A27pRX362CcfxhW2FD6Vdzk1zLM3jTsJ",
+  "status": "ok",
+  "time": 1794482869
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "EQz3WhorV97ZHQoGkuyM6e1pbgwR4agcJPSXA2AJ2QNj",
+  "status": "ok",
+  "time": 1794482918
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "238rWBUowYZ8J1Cyfp95TJnZL9cg5M3xb3MYm6FtEDXb",
+  "status": "ok",
+  "time": 1794482970
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "FMtBVvHGs365u8CwNMywUAXQvRsH9G8g8CXeZwkJhpX8",
+  "status": "ok",
+  "time": 1794483044
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "CTrywpZvTGJnUkhrPHdHFLtXsUoAsdQDeHZCtBLxME87",
+  "status": "ok",
+  "time": 1794483171
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "DyRE5sdopPypicH41M2kNUnFPNSG4tmNtRaFU28tguad",
+  "status": "ok",
+  "time": 1794483221
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "9BGbWmFCRgHv6oAtJceYByf9wnoAj98cqkcjP6Wc1jg5",
+  "status": "ok",
+  "time": 1794483263
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "2dGRqWMsZE1pisR68QQq1q3QfNofKpsbxCMV5mMSoYCY",
+  "status": "ok",
+  "time": 1794483311
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "Eeo5UTBQtCKSFxtsvUq6CAMnsScHFB2ZRttBLM9QGPrU",
+  "status": "ok",
+  "time": 1794483353
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "7GURDZm5gMghHxD9kVrB2ce8VAPCn593euxKKAnREk6t",
+  "status": "ok",
+  "time": 1794483385
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "VBD4TCVsaCLzx841d9e3w9eK5vBFBa5ssHN3GeVsGRj",
+  "status": "ok",
+  "time": 1794483427
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "5DG3RGrYRL3mELdkfQapYrwqsZpj5SHXtsBFH81GzAko",
+  "status": "ok",
+  "time": 1794483471
+ },
+ {
+  "method": "start_duel",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "9he2cnz1hNmaaXczWRYCzQcmAtnEL2yi5ajuFZeS8UHM",
+  "status": "ok",
+  "time": 1794483476
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "3k9mc921T1jKFKmceMJPaa8AS4uRcdNTzRZNRJaAYKLt",
+  "status": "ok",
+  "time": 1794483517
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "BBXUwAQSLsR14FR229hL8c2L3CHn2VTtY61fmBUbgAPx",
+  "status": "ok",
+  "time": 1794483561
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "D9NUTEwNa9VH1VMnUJj9GuWMyXkvfMB3gniGF94wr5x",
+  "status": "ok",
+  "time": 1794483608
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "GCTRsbaKio76WPU8w8TFe674KhHYziwrmJAnRFi2SNnE",
+  "status": "ok",
+  "time": 1794483646
+ },
+ {
+  "method": "start_duel",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "w4tsyU8KnNpQ1V1v2Lvns1SHSCJgMbVbzRnTP2eHz5U",
+  "status": "ok",
+  "time": 1794483651
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "G4JJC64NFnQV9K4uheynq8E4WfahQYf3pssrfET2WrVc",
+  "status": "ok",
+  "time": 1794483698
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "6gPMaPZCZQaA6GQ7AiFgAts4Va6yR1KuEV3FBUNwuYgb",
+  "status": "ok",
+  "time": 1794483737
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "WXBtw2LA9GT4XH5cSHPtW13JfQBfPWJeXjBRktEZ7ES",
+  "status": "ok",
+  "time": 1794483794
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "B45og5nHjCNk2nMwABPK7UKfb5xriuh6GsPks8JzPhoP",
+  "status": "ok",
+  "time": 1794483838
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "GEzsqNRNtdtrSmxvwku8DcTsAMCDu1he3ATsEKPXpQyG",
+  "status": "ok",
+  "time": 1794483889
+ },
+ {
+  "method": "run_portion",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "Cbk6GHiaycjh5sF7HbmieotjWAh2VEoTt2M5A89woPRy",
+  "status": "failed",
+  "time": 1794483894
+ },
+ {
+  "method": "end_duel",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "G4Y44WLD12DJDGAiDJdBbNXX4F59krAawnSD4A6cdZSQ",
+  "status": "ok",
+  "time": 1794483898
+ },
+ {
+  "method": "close",
+  "signer": "attested-arena.testnet",
+  "args": {},
+  "hash": "7qQag4wzHvxCc5zH52XFanPWQgZdnLaW4xso2Y6uf4gL",
+  "status": "ok",
+  "time": 1794483903
+ },
+ {
+  "method": "redeem",
+  "signer": "arena-bob.testnet",
+  "args": {},
+  "hash": "GPC8pNQxuWyCxvebnkuSqvHjraXhamNoBXsWqXUxRwep",
+  "status": "ok",
+  "time": 1794483908
+ },
+ {
+  "method": "refund_deposit",
+  "signer": "arena-bob.testnet",
+  "args": {
+   "entry": 0
+  },
+  "hash": "AJpVmp4ee2u1EC6hNVw1L3SVbvp4i2c8MAAdk9QKG2rC",
+  "status": "ok",
+  "time": 1794483912
+ },
+ {
+  "method": "refund_deposit",
+  "signer": "arena-alice.testnet",
+  "args": {
+   "entry": 1
+  },
+  "hash": "HNLWrFLn7kQhHHUiFDZC2kkQEGZPfoajys17anp5rcZv",
+  "status": "ok",
+  "time": 1794483917
+ },
+ {
+  "method": "refund_deposit",
+  "signer": "arena-carol.testnet",
+  "args": {
+   "entry": 2
+  },
+  "hash": "FYHjL3Z7Z1RiFRWgnemvGLhoG4RjkfMy3RbgdVjan98w",
+  "status": "ok",
+  "time": 1794483922
+ },
+ {
+  "method": "reveal",
+  "signer": "attested-arena.testnet",
+  "args": {
+   "tasks": [
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  },
+  "hash": "GXBymCqD6x91orggARnVBYp9uLTc2WwDSmviow9rSTLg",
+  "status": "ok",
+  "time": 1794483977
+ }
+]

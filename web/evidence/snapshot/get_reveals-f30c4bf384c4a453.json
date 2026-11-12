@@ -1,0 +1,18 @@
+[
+  {
+    "tasks": [
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "state": {
+      "Done": {
+        "payload": "{\"kind\":\"reveal\",\"arena\":\"season5.attested-arena.testnet\",\"operator\":\"attested-arena.testnet\",\"leaves\":[\"79d17a7360d3fffaecedb126f6dc99b4a004669c2299856979b8f620a50d2cd9\",\"ad00829f8cfda6439e92303b9b7c026f69036ad439381aa28ba7fbf58bc75343\",\"b0034da061ca3368dd31720117b903e31a6b6e179fa1db093ba6d4812445ae73\",\"6132d6664850594f008fe02b560fc89b970180d753d5efa87df7eb29c2f30d32\",\"7d203a349bfe68826c7c341f7714c9a1d4923697ec37711479a5716660f771cf\"],\"evidence_sha256\":\"fbaf0c546b1c128950e1bcf1c4b4c0f3bf3bc09363ceed168580ce270a0e2b5c\"}",
+        "signature": "707e794567f4fec0a65a7af7f7fbdf6fea59137f6a262df6271b9e60c40e12fd5de6f75894f1e25512e102952de3205d699783781e1c0c60ac32aa2274d3f000",
+        "evidence_sha256": "fbaf0c546b1c128950e1bcf1c4b4c0f3bf3bc09363ceed168580ce270a0e2b5c"
+      }
+    }
+  }
+]

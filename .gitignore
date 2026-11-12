@@ -1,0 +1,16 @@
+target/
+node_modules/
+dist/
+.env
+*.env
+*.local
+.DS_Store
+scripts/.state/
+
+# The global gitignore of some machines ignores `test`; these are the page's tests.
+!test
+
+# The global gitignore of some machines drops lockfiles; both builds are
+# reproducible only with them.
+!Cargo.lock
+!contract/Cargo.lock

@@ -1,0 +1,37 @@
+{
+  "display": {
+    "name": "Attested Arena — judge"
+  },
+  "operations": [
+    "identity",
+    "generate",
+    "portion",
+    "reveal"
+  ],
+  "capabilities": {
+    "network": [
+      {
+        "host": "cloud-api.near.ai",
+        "timeout_secs": 170
+      },
+      "api.trustedservices.intel.com",
+      "certificates.trustedservices.intel.com",
+      "nras.attestation.nvidia.com"
+    ]
+  },
+  "signing_keys": [
+    {
+      "path": "judge",
+      "type": "ed25519",
+      "bind": "wasm",
+      "caller": "none"
+    }
+  ],
+  "encryption_keys": [
+    {
+      "path": "pool",
+      "bind": "wasm",
+      "caller": "signer"
+    }
+  ]
+}

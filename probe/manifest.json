@@ -1,0 +1,12 @@
+{
+  "display": {
+    "name": "Attested Arena — probe (an experiment)"
+  },
+  "encryption_keys": [
+    {
+      "path": "pool",
+      "bind": "wasm",
+      "caller": "signer"
+    }
+  ]
+}

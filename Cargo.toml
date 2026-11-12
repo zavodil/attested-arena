@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+members = ["core", "judge", "verify", "probe"]
+# The arena contract builds with its own toolchain (cargo near, NEAR's wasm target).
+exclude = ["contract"]
+
+[workspace.package]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/zavodil/attested-arena"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true
+codegen-units = 1

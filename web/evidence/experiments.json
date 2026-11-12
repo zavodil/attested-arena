@@ -1,0 +1,19 @@
+{
+ "season": "season5.attested-arena.testnet",
+ "task_index": 15,
+ "leaf": "79d17a7360d3fffaecedb126f6dc99b4a004669c2299856979b8f620a50d2cd9",
+ "direct": {
+  "tx": "CNSeM6erKeuNXHkshyjrCfF3Ky9G6XPHFN68bFyZazx6",
+  "output": {
+   "error": "this operation is taken only from the arena season5.attested-arena.testnet itself, not from `attested-arena.testnet`"
+  }
+ },
+ "other_build": {
+  "tx": "Equ9rzkRUXYJcsvD3niUBAmJvgKU6pvJdsnhbCrunKNp",
+  "probe_sha256": "0b7bed8512eb174cf8f72e51de9d2415ad167bf68b7ce693aaa02e23648a29bc",
+  "output": {
+   "error": "Encryption key error: decryption failed",
+   "opened": false
+  }
+ }
+}

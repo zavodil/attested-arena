@@ -1,0 +1,31 @@
+[package]
+name = "arena-judge"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Attested Arena's judge: an OutLayer module that writes the exam inside a TEE, seals it to its own build, and judges duels between models that run in NEAR AI's TEEs"
+
+[[bin]]
+name = "arena-judge"
+path = "src/main.rs"
+
+[dependencies]
+arena-core = { path = "../core" }
+# Input and output, the build-bound `judge` signing key and `pool` encryption
+# key, and NEAR RPC. The path is OutLayer's SDK tree until 0.2.2 is on crates.io.
+outlayer = { version = "=0.2.1", features = ["encryption-keys", "signing-keys"] }
+serde = { version = "1.0", features = ["derive"] }
+# `raw_value`: Intel signs the exact bytes of `tcbInfo` and `enclaveIdentity`,
+# so they are carried as served, never re-serialised.
+serde_json = { version = "1.0", features = ["raw_value"] }
+# The only way out of the enclave (`wasi:http`).
+wasi = "0.13"
+base64 = "0.22"
+hex = "0.4"
+getrandom = "0.2"
+# EIP-191 recovery of each answer's signature.
+k256 = { version = "0.13", default-features = false, features = ["ecdsa", "arithmetic"] }
+sha3 = { version = "0.10", default-features = false }
+# Intel TDX quote verification inside the enclave.
+dcap-qvl = { version = "0.3.12", default-features = false, features = ["std", "rustcrypto"] }
